@@ -1,0 +1,423 @@
+/*   MIXINS.less
+ *
+ *
+ * This file contains all the mixins, primarly used for compatibility (and readability)
+ * of other .less files.
+ *
+ * Mixins are taken from:
+ *  - http://css-tricks.com/snippets/css/useful-css3-less-mixins
+ *     Credits to Chris Coyier
+ *  - https://github.com/mrkrupski/LESS-Dynamic-Stylesheet
+ *  Credits to: Chris Coyier, Chris Krupski
+ *
+ *
+ * Last updated: 15 Apr. 2014 | v0.0.1
+ */
+
+
+
+
+
+//  *SHADOWS*
+
+.box-shadow (@string) {
+	-webkit-box-shadow: @string;
+	   -moz-box-shadow: @string;
+	        box-shadow: @string;
+}
+//---> NEEDS REVIEW: are default values OK?
+.drop-shadow (@x: 0, @y: 1px, @blur: 2px, @spread: 0, @alpha: 0.25) {
+	-webkit-box-shadow:	@x @y @blur @spread rgba(0, 0, 0, @alpha);
+	   -moz-box-shadow:	@x @y @blur @spread rgba(0, 0, 0, @alpha);
+	        box-shadow: @x @y @blur @spread rgba(0, 0, 0, @alpha);
+}
+//---> NEEDS REVIEW: are default values OK?
+.inner-shadow (@x: 0, @y: 1px, @blur: 2px, @spread: 0, @alpha: 0.25) {
+	-webkit-box-shadow: inset @x @y @blur @spread rgba(0, 0, 0, @alpha);
+	   -moz-box-shadow: inset @x @y @blur @spread rgba(0, 0, 0, @alpha);
+	        box-shadow: inset @x @y @blur @spread rgba(0, 0, 0, @alpha);
+}
+
+
+
+//  *OPACITY & GRADIENTS*
+
+.opacity (@opacity: 0.5) {
+	@ieOpacity: @opacity * 100;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=@{ieOpacity})";
+	filter: 	~"alpha(opacity=@{ieOpacity})";
+
+	-webkit-opacity: 	@opacity;
+	-moz-opacity: 		@opacity;
+	opacity: 			@opacity;
+}
+
+.l-gradient (@string) {
+	//Insert -webkit-gradient and fallback background-color in stylesheet!
+	background: -webkit-linear-gradient(@string);
+	background:    -moz-linear-gradient(@string);
+	background:     -ms-linear-gradient(@string);
+	background:      -o-linear-gradient(@string);
+	background:         linear-gradient(@string);
+}
+.v-gradient (@startColor: #eee, @endColor: white) {
+	background-color: @startColor;
+
+	background: -webkit-gradient(linear, left top, left bottom, from(@startColor), to(@endColor));
+	background: -webkit-linear-gradient(top, @startColor, @endColor);
+	background:    -moz-linear-gradient(top, @startColor, @endColor);
+	background:     -ms-linear-gradient(top, @startColor, @endColor);
+	background:      -o-linear-gradient(top, @startColor, @endColor);
+	background:         linear-gradient(top, @startColor, @endColor);
+
+	filter: e(%("progid:DXImageTransform.Microsoft.gradient(GradientType=0, StartColorStr='%d', EndColorStr='%d')", @startColor, @endColor));
+}
+.h-gradient (@startColor: #eee, @endColor: white) {
+ 	background-color: @startColor;
+
+	background-image: -webkit-gradient(linear, left top, right top, from(@startColor), to(@endColor));
+	background-image: -webkit-linear-gradient(left, @startColor, @endColor);
+	background-image:    -moz-linear-gradient(left, @startColor, @endColor);
+	background-image:     -ms-linear-gradient(left, @startColor, @endColor);
+	background-image:      -o-linear-gradient(left, @startColor, @endColor);
+	background-image:         linear-gradient(left, @startColor, @endColor);
+
+	filter: e(%("progid:DXImageTransform.Microsoft.gradient(GradientType=1, StartColorStr='%d', EndColorStr='%d')", @startColor, @endColor));
+}
+.r-gradient (@string) {
+	//Insert -webkit-gradient and fallback background-color in stylesheet!
+	background-image: -webkit-radial-gradient(@string);
+	background-image:    -moz-radial-gradient(@string);
+	background-image:      -o-radial-gradient(@string);
+	background-image:         radial-gradient(@string);
+}
+.r-gradient (@innerColor: #eee, @outerColor: white) {
+  background-color: @outerColor;
+
+  background-image: -webkit-gradient(radial, 50% 50%, 200, 50% 50%, 20, from(@outerColor), to(@innerColor));
+  background-image: -webkit-radial-gradient(50% 50%, @innerColor, @outerColor);
+  background-image:    -moz-radial-gradient(50% 50%, @innerColor, @outerColor);
+  background-image:      -o-radial-gradient(50% 50%, @innerColor, @outerColor);
+  background-image:         radial-gradient(50% 50%, @innerColor, @outerColor);
+}
+
+
+
+//  *ANIMATIONS*
+
+.animation (@string) {
+	-webkit-animation: @string;
+	   -moz-animation: @string;
+	    -ms-animation: @string;
+	        animation: @string;
+}
+.animation-state (@state: running) {
+  -webkit-animation-play-state: @state;
+     -moz-animation-play-state: @state;
+          animation-play-state: @state;
+}
+
+.transition (@transition) {
+	-webkit-transition: @transition;  
+	   -moz-transition: @transition;
+	    -ms-transition: @transition; 
+	     -o-transition: @transition;  
+	        transition: @transition;  
+}
+
+
+
+//  *TRANSFORMS*
+
+.transform(@string){
+	-webkit-transform: 	@string;
+	   -moz-transform: 	@string;
+	    -ms-transform: 	@string;
+	     -o-transform: 	@string;
+	        transform: 	@string;
+}
+	.transform-matrix (@rotate: 0, @scale: 1, @translate: 0, @skew: 0, @x: 0, @y: 0) {
+	    -webkit-transform: matrix(@rotate, @scale, @translate, @skew, @x, @y);
+	       -moz-transform: matrix(@rotate, @scale, @translate, @skew, @x, @y);
+	        -ms-transform: matrix(@rotate, @scale, @translate, @skew, @x, @y);
+	         -o-transform: matrix(@rotate, @scale, @translate, @skew, @x, @y);
+	            transform: matrix(@rotate, @scale, @translate, @skew, @x, @y);
+	  
+	    filter: e(%("progid:DXImageTransform.Microsoft.Matrix(M11=%d, M12=%d, M21=%d, M22=%d, sizingMethod='auto expand')", @rotate, @scale, @translate, @skew));
+	}
+	//---> NEEDS REVIEW: are default values OK?
+	.transform-matrix3d (@values: "1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1") {
+	    -webkit-transform: matrix3d(e(@values));
+	       -moz-transform: matrix3d(e(@values));
+	        -ms-transform: matrix3d(e(@values));
+	         -o-transform: matrix3d(e(@values));
+	            transform: matrix3d(e(@values));
+	}
+.translate (@x: 0, @y:0) when (isnumber(@x)) {
+	-webkit-transform: 	translate(@x, @y);
+	   -moz-transform: 	translate(@x, @y);
+	    -ms-transform: 	translate(@x, @y);
+	     -o-transform: 	translate(@x, @y);
+	        transform: 	translate(@x, @y);
+}
+	.translate3d (@x: 0, @y: 0, @z: 0) {
+		-webkit-transform:  translate3d(@x, @y, @z);
+		   -moz-transform: 	translate3d(@x, @y, @z);
+		    -ms-transform: 	translate3d(@x, @y, @z);
+		     -o-transform: 	translate3d(@x, @y, @z);
+		        transform: 	translate3d(@x, @y, @z);
+	}
+	.translate (x, @x: 0) {
+	    -webkit-transform: e(%('translateX(%d)', @x * 1px));
+	       -moz-transform: e(%('translateX(%d)', @x * 1px));
+	        -ms-transform: e(%('translateX(%d)', @x * 1px));
+	         -o-transform: e(%('translateX(%d)', @x * 1px));
+	            transform: e(%('translateX(%d)', @x * 1px));
+	}
+	.translate (y, @y: 0) {
+	    -webkit-transform: e(%('translateY(%d)', @y * 1px));
+	       -moz-transform: e(%('translateY(%d)', @y * 1px));
+	        -ms-transform: e(%('translateY(%d)', @y * 1px));
+	         -o-transform: e(%('translateY(%d)', @y * 1px));
+	            transform: e(%('translateY(%d)', @y * 1px));
+	}
+	.translate (z, @z: 0) {
+	    -webkit-transform: e(%('translateZ(%d)', @z * 1px));
+	       -moz-transform: e(%('translateZ(%d)', @z * 1px));
+	        -ms-transform: e(%('translateZ(%d)', @z * 1px));
+	         -o-transform: e(%('translateZ(%d)', @z * 1px));
+	            transform: e(%('translateZ(%d)', @z * 1px));
+	}
+.rotate (@deg: 0) {
+	-webkit-transform: 	rotate(@deg);
+	   -moz-transform: 	rotate(@deg);
+	    -ms-transform: 	rotate(@deg);
+	     -o-transform: 	rotate(@deg);
+	        transform: 	rotate(@deg);
+}
+	.rotate3d (@x: 0, @y: 0, @z: 0, @deg: 0) {
+		-webkit-transform: rotate3d(@x, @y, @z, ~"@{deg}deg");
+	       -moz-transform: rotate3d(@x, @y, @z, ~"@{deg}deg");
+	        -ms-transform: rotate3d(@x, @y, @z, ~"@{deg}deg");
+	         -o-transform: rotate3d(@x, @y, @z, ~"@{deg}deg");
+	            transform: rotate3d(@x, @y, @z, ~"@{deg}deg");
+	}
+	.rotate (x; @deg: 0) {
+		-webkit-transform: e(%('rotateX(%d)', ~"@{deg}deg"));
+	       -moz-transform: e(%('rotateX(%d)', ~"@{deg}deg"));
+	        -ms-transform: e(%('rotateX(%d)', ~"@{deg}deg"));
+	         -o-transform: e(%('rotateX(%d)', ~"@{deg}deg"));
+	            transform: e(%('rotateX(%d)', ~"@{deg}deg"));
+	}
+	.rotate (y; @deg: 0) {
+		-webkit-transform: e(%('rotateY(%d)', ~"@{deg}deg"));
+	       -moz-transform: e(%('rotateY(%d)', ~"@{deg}deg"));
+	        -ms-transform: e(%('rotateY(%d)', ~"@{deg}deg"));
+	         -o-transform: e(%('rotateY(%d)', ~"@{deg}deg"));
+	            transform: e(%('rotateY(%d)', ~"@{deg}deg"));
+	}
+	.rotate (z; @deg: 0) {
+		-webkit-transform: e(%('rotateZ(%d)', ~"@{deg}deg"));
+	       -moz-transform: e(%('rotateZ(%d)', ~"@{deg}deg"));
+	        -ms-transform: e(%('rotateZ(%d)', ~"@{deg}deg"));
+	         -o-transform: e(%('rotateZ(%d)', ~"@{deg}deg"));
+	            transform: e(%('rotateZ(%d)', ~"@{deg}deg"));
+	}
+.skew (@deg-x: 0, @deg-y: 0) {
+	-webkit-transform: 	skew(@deg-x, @deg-y);
+	   -moz-transform: 	skew(@deg-x, @deg-y);
+	    -ms-transform: 	skew(@deg-x, @deg-y);
+	     -o-transform: 	skew(@deg-x, @deg-y);
+	        transform: 	skew(@deg-x, @deg-y);
+}
+	.skew (x, @deg-x: 0) {
+		-webkit-transform: e(%('skewX(%d)', ~"@{deg-x}deg"));
+		   -moz-transform: e(%('skewX(%d)', ~"@{deg-x}deg"));
+		    -ms-transform: e(%('skewX(%d)', ~"@{deg-x}deg"));
+		     -o-transform: e(%('skewX(%d)', ~"@{deg-x}deg"));
+		        transform: e(%('skewX(%d)', ~"@{deg-x}deg"));
+	}
+	.skew (y, @deg-y: 0) {
+		-webkit-transform: e(%('skewY(%d)', ~"@{deg-y}deg"));
+		   -moz-transform: e(%('skewY(%d)', ~"@{deg-y}deg"));
+		    -ms-transform: e(%('skewY(%d)', ~"@{deg-y}deg"));
+		     -o-transform: e(%('skewY(%d)', ~"@{deg-y}deg"));
+		        transform: e(%('skewY(%d)', ~"@{deg-y}deg"));
+	}
+.scale (@factor: 1) {
+	-webkit-transform: 	scale(@factor);
+	   -moz-transform: 	scale(@factor);
+	    -ms-transform: 	scale(@factor);
+	     -o-transform: 	scale(@factor);
+	        transform: 	scale(@factor);
+}
+	.scale3d (@x: 1, @y: 1, @z: 1) {
+	  -webkit-transform: scale3d(@x, @y, @z);
+	     -moz-transform: scale3d(@x, @y, @z);
+	      -ms-transform: scale3d(@x, @y, @z);
+	          transform: scale3d(@x, @y, @z);
+	}
+	.scale (x, @value: 1) {
+	  -webkit-transform: e(%('scaleX(%d)', @value));
+	     -moz-transform: e(%('scaleX(%d)', @value));
+	      -ms-transform: e(%('scaleX(%d)', @value));
+	       -o-transform: e(%('scaleX(%d)', @value));
+	          transform: e(%('scaleX(%d)', @value));
+	}
+	.scale (y, @value: 1) {
+	  -webkit-transform: e(%('scaleY(%d)', @value));
+	     -moz-transform: e(%('scaleY(%d)', @value));
+	      -ms-transform: e(%('scaleY(%d)', @value));
+	       -o-transform: e(%('scaleY(%d)', @value));
+	          transform: e(%('scaleY(%d)', @value));
+	}
+	.scale (z, @value: 1) {
+	  -webkit-transform: e(%('scaleZ(%d)', @value));
+	     -moz-transform: e(%('scaleZ(%d)', @value));
+	      -ms-transform: e(%('scaleZ(%d)', @value));
+	       -o-transform: e(%('scaleZ(%d)', @value));
+	          transform: e(%('scaleZ(%d)', @value));
+	}
+.perspective (@value: 1000) {
+	-webkit-perspective:	@value;
+	   -moz-perspective: 	@value;
+	    -ms-perspective: 	@value;
+	        perspective: 	@value;
+}
+.transform-origin (@x:center, @y:center) {
+	-webkit-transform-origin: @x @y;
+	   -moz-transform-origin: @x @y;
+	    -ms-transform-origin: @x @y;
+	     -o-transform-origin: @x @y;
+	        transform-origin: @x @y;
+}
+.transform-style (@value: flat) { /* ( flat | preserve-3d ) */
+  -webkit-transform-style: @value;   
+     -moz-transform-style: @value; /* FF 10+ */
+      -ms-transform-style: @value; /* IE 10+ */
+          transform-style: @value; 
+}
+
+
+
+//  *BACKGROUNDS*
+
+.bg-clip (@type) when (@type = initial), (@type = inherit) {
+	-webkit-background-clip: @type;
+	 -khtml-background-clip: @type;
+       -moz-background-clip: @type;
+            background-clip: @type;
+}
+.bg-clip (@type: border-box) when (@type = border-box), (@type = padding-box), (@type = content-box) {
+	//Please use types without the -box affix, as this will ensure compatibility with -moz-background-clip
+    -webkit-background-clip: @type;
+     -khtml-background-clip: @type;
+            background-clip: @type;
+}
+.bg-clip (@type: border) when not (@type = border-box) and not (@type = padding-box) and not (@type = content-box) and not (@type = initial) and not (@type = inherit) {
+	-webkit-background-clip: ~"@{type}-box";
+	 -khtml-background-clip: ~"@{type}-box";
+	   -moz-background-clip: @type;
+	        background-clip: ~"@{type}-box";
+}
+
+.bg-origin (@value) when (@value = initial), (@value = inherit) {
+	-webkit-background-origin: @value;
+	 -khtml-background-origin: @value;
+	   -moz-background-origin: @value;
+	     -o-background-origin: @value;
+	        background-origin: @value;
+}
+.bg-origin (@value) when (@value = border-box), (@value = padding-box), (@value = content-box) {
+	//Please use types without the -box affix, as this will ensure compatibility with -moz-background-origin
+	-webkit-background-origin: @value;
+	 -khtml-background-origin: @value;
+	     -o-background-origin: @value;
+	        background-origin: @value;
+}
+.bg-origin (@value) when not (@type = border-box) and not (@value = padding-box) and not (@value = content-box) and not (@value = initial) and not (@value = inherit) {
+	-webkit-background-origin: ~"@{value}-box";
+	 -khtml-background-origin: ~"@{value}-box";
+	   -moz-background-origin: @value;
+	     -o-background-origin: ~"@{value}-box";
+	        background-origin: ~"@{value}-box";
+}
+
+.bg-size (@value) {
+	-webkit-background-size: @value;
+	 -khtml-background-size: @value;
+	   -moz-background-size: @value;
+	     -o-background-size: @value;
+	        background-size: @value;
+}
+
+
+
+//  *BOXES*
+
+//---> NEEDS REVIEW: is the padding-box thing needed?
+.border-radius (@radius: 2px) {
+	-webkit-border-radius: @radius;
+	   -moz-border-radius: @radius;
+	        border-radius: @radius;
+
+	//.bg-clip(padding);
+}
+
+.display-box () {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-box;
+	display: box;
+}
+.box-sizing (@type: border-box) {
+	-webkit-box-sizing: @type;
+	   -moz-box-sizing: @type;
+	        box-sizing: @type;
+}
+.box-align (@value) {
+    -webkit-box-align: @value;
+       -moz-box-align: @value;
+        -ms-box-align: @value;
+            box-align: @value;
+
+    .box-display;
+}
+.box-direction (@value) {
+    -webkit-box-align: @value;
+       -moz-box-align: @value;
+        -ms-box-align: @value;
+            box-align: @value;
+
+    .box-display;
+}
+.box-orient (@value) {
+  -webkit-box-align: @value;
+     -moz-box-align: @value;
+      -ms-box-align: @value;
+          box-align: @value;
+
+  .box-display;
+}
+.box-pack (@value) {
+  -webkit-box-align: @value;
+     -moz-box-align: @value;
+      -ms-box-align: @value;
+          box-align: @value;
+
+  .box-display;
+}
+
+
+
+//   *MISCELLANEOUS*
+.clearfix () {
+  *zoom: 1;
+  &:before, &:after {
+    content: "";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
