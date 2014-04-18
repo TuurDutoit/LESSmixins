@@ -11,8 +11,7 @@
  *  Credits to: Chris Coyier, Chris Krupski
  *
  *
- * Last updated: 18 Apr. 2014 | v1.1.0
- *  -> Added .user-select()
+ * Last updated: 15 Apr. 2014 | v0.0.1
  */
 
 
@@ -421,4 +420,10 @@
   &:after {
     clear: both;
   }
+}
+
+.user-select (@value) {
+	-webkit-user-select: @value;
+	   -moz-user-select: @value;
+	    -ms-user-select: @value;
 }

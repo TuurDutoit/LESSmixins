@@ -11,8 +11,9 @@
  *  Credits to: Chris Coyier, Chris Krupski
  *
  *
- * Last updated: 18 Apr. 2014 | v1.1.0
- *  -> Added .user-select()
+ * Last updated: 18 Apr. 2014 | v1.2.0
+ *  -> Added .calc()
+ *  -> Updated .user-select()
  */
 
 
@@ -412,6 +413,12 @@
 
 
 //   *MISCELLANEOUS*
+.calc(@value) {
+	-webkit-calc(@value);
+	   -moz-calc(@value);
+	        calc(@value);
+}
+
 .clearfix () {
   *zoom: 1;
   &:before, &:after {
@@ -421,4 +428,11 @@
   &:after {
     clear: both;
   }
+}
+
+.user-select (@value) {
+	-webkit-user-select: @value;
+	   -moz-user-select: @value;
+	    -ms-user-select: @value;
+	        user-select: @value;
 }
